@@ -1,9 +1,17 @@
-import { t } from 'i18next'
 import React from 'react'
 import AppContext from '../context'
 
 export const Info = ({title, img, description}) => {
     const {setCartOpened} =React.useContext(AppContext)
+    const {isLanguage} = React.useContext(AppContext)
+
+    let infoButton
+  if(isLanguage){
+    infoButton = "Go back"
+  }else{
+    infoButton = "Вернуться назад"
+  }
+
   return (
     <div className='cart-empty'>
             <div className='cart-empty-item'>
@@ -13,7 +21,7 @@ export const Info = ({title, img, description}) => {
               <p style={{opacity: 0.6}}>{description}</p>
             </div>
             <button onClick={() => setCartOpened(false)} className='empty-green-button'>
-              <h1>{t('infoButton')}</h1>
+              <h1>{infoButton}</h1>
             </button>
           </div>
           </div>

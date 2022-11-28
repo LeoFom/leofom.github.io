@@ -11,27 +11,6 @@ import AppContext from './context';
 import Orders from './pages/Orders';
 import Footer from './components/Footer';
 
-import i18n from 'i18next';
-import { initReactI18next, useTranslation } from 'react-i18next';
-
-import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
-
-const language = ['en', 'ua']
-
-i18n
-.use(Backend)
-.use(LanguageDetector)
-.use(initReactI18next)
-  .init({
-  fallbackLng: "en",
-  debug: false,
-  whitelist: language,
-  interpolation: {
-    escapeValue: false
- }
-});
-
 function App() {
   const [items, setItems] = React.useState([])
   const [cartItems, setCartItems] = React.useState([])
@@ -41,15 +20,10 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(true)
   
   const [isLanguage, setIsLanguage] = React.useState(true)
-
-  function clickLanguage(lang){
-    i18n.changeLanguage(lang)
-  }
   
   React.useEffect(() => {
     async function fetchData(){
       try{
-        clickLanguage('en')
         setIsLoading(true)
         const [itemsResponse, cartResponse, favoritesResponse] = await Promise.all([
           fetch('https://635ba19f8aa87edd914cefe5.mockapi.io/api/sneakers/items').then((res) => {
@@ -173,10 +147,9 @@ function App() {
     return favorites.some((obj) => Number(obj.parentId) === Number(id))
   }
 
-  const {t, i18n} = useTranslation()
 
   return (
-    <AppContext.Provider value={{items, cartItems, setCartItems, favorites, isItemAdded, isItemFavorite, setCartOpened, isLanguage, t, clickLanguage, setIsLanguage}}>
+    <AppContext.Provider value={{items, cartItems, setCartItems, favorites, isItemAdded, isItemFavorite, setCartOpened, isLanguage, setIsLanguage}}>
       <div className="wrapper">
         <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItems} opened={cartOpened}/>
         <Header onClickCart={() => setCartOpened(true)} />
@@ -192,7 +165,7 @@ function App() {
         <div className='main-footer'>
           <div className='main-footer-block'>
             <div className='main-footer-left'>
-              <img width={40} height={40} src="/img/sneaker-svgrepo-com.svg" alt="Sneakers Shop"/>
+              <img width={40} height={40} src="img/sneaker-svgrepo-com.svg" alt="Sneakers Shop"/>
               <div className='footer-left-title'>
                 <h1>React</h1>
                 <h2>Sneakers</h2>
@@ -201,7 +174,7 @@ function App() {
             <div className='main-footer-right'>
               
               <a href='https://github.com/LeoFom'>
-                <img width={30} height={30} src="/img/github.svg" alt="Sneakers Shop"/>
+                <img width={30} height={30} src="img/github.svg" alt="Sneakers Shop"/>
                 <h2>GitHub</h2>
               </a>
             </div>

@@ -5,8 +5,15 @@ import AppContext from '../context';
 
 
 export default function Home({items, searchValue, setSearchValue, onChangeSearchInput, onAddToCart, onAddToFavorite, isLoading}){
-  const {t, isLanguage} = React.useContext(AppContext)
-
+  const {isLanguage} = React.useContext(AppContext)
+  let homeTitle, search
+  if(isLanguage){
+    search = "Search"
+    homeTitle = "Sneakers"
+  }else{
+    search = "Пошук"
+    homeTitle = "Усі кросовки"
+  }
 
   function renderCards() {
     return (items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase())).map((item, index) =>(
@@ -15,8 +22,6 @@ export default function Home({items, searchValue, setSearchValue, onChangeSearch
         key={index}
         onFavorite={(item) => onAddToFavorite(item)}
         addToCart={(item) => onAddToCart(item)}
-        // itemIsFavorite={isItemFavorite(item.id)}
-        // added={isItemAdded(item)}
         pageLoading={isLoading}
         {...item}
       />)))
@@ -33,11 +38,11 @@ export default function Home({items, searchValue, setSearchValue, onChangeSearch
   return(
     <div className="content">
       <div className="content-header">
-        <h1>{searchValue ? `${t('search')} - "${searchValue}"` : t('homeTitle')}</h1>
+        <h1>{searchValue ? `${search} - "${searchValue}"` : (homeTitle)}</h1>
         <div className="search-block">
-          <img src="/img/search.svg" alt="Search" />
-            {searchValue && <img onClick={() => setSearchValue('')  } className='search-clear' src='/img/btn-remove.svg' alt='Clear'/>}
-          <input onChange={onChangeSearchInput} value={searchValue} placeholder="Поиск..." />
+          <img src="img/search.svg" alt="Search" />
+            {searchValue && <img onClick={() => setSearchValue('')  } className='search-clear' src='img/btn-remove.svg' alt='Clear'/>}
+          <input onChange={onChangeSearchInput} value={searchValue} placeholder={isLanguage ? "Search..." : "Поиск..."} />
         </div>
       </div>
 

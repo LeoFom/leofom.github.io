@@ -9,8 +9,16 @@ export default function Orders(){
   const [allOrders, setAllOrders] = React.useState([])
   const [orders, setOrders] = React.useState([])
   const [isLoading, setIsLoading] = React.useState(true)
-  const {t, isLanguage} = React.useContext(AppContext)
+  const {isLanguage} = React.useContext(AppContext)
 
+  let order, orederTitle
+  if(isLanguage){
+    order = "Order"
+    orederTitle = "My orders"
+  }else{
+    order = "Заказ"
+    orederTitle = "Мої замовлення"
+  }
 
   React.useEffect(() => {
     (async () => {
@@ -31,7 +39,7 @@ export default function Orders(){
   return(
   <div className="content">
     <div className="content-header">
-      <h1>{t("orederTitle")}</h1>
+      <h1>{orederTitle}</h1>
     </div>
       
       { (isLoading ? [...Array(8)] : (Object.values(allOrders)).reverse()).map((item,index) => (
@@ -41,7 +49,7 @@ export default function Orders(){
           <div className="order-container">
             <div className='order-header'>
               
-              <h1>{`${t('order')} #${item.id}`}</h1>
+              <h1>{`${order} #${item.id}`}</h1>
             </div>
               <div className='order-card'> 
           

@@ -8,7 +8,16 @@ export default function Card({id, parentId, name, price, src, onFavorite, onUnFa
   const {isItemAdded} = React.useContext(AppContext)
   const {isItemFavorite} = React.useContext(AppContext)
   const {isLanguage} = React.useContext(AppContext)
-  const {t} = React.useContext(AppContext)
+
+  let priceTitle, priceFigure
+  if(isLanguage){
+    priceFigure = "$"
+    priceTitle = "Price:"
+  }
+  else{
+    priceFigure = "грн"
+    priceTitle = "Цена:"
+  }
 
     const obj = {id, parentId, name, price, src}
   
@@ -52,21 +61,21 @@ export default function Card({id, parentId, name, price, src, onFavorite, onUnFa
             <div className="favorite">
               
               { addToCart && (onFavorite ?
-                <img onClick={clickFavorite} src={(isItemFavorite(id) ? "/img/heart-red.svg" : "/img/heart.svg")} alt="Подобається"/> 
+                <img onClick={clickFavorite} src={(isItemFavorite(id) ? "img/heart-red.svg" : "img/heart.svg")} alt="Подобається"/> 
                 :
-                <img onClick={unClickFavorite} src={"/img/heart-red.svg"} alt="Подобається"/>)
+                <img onClick={unClickFavorite} src={"img/heart-red.svg"} alt="Подобається"/>)
               }
             </div>
             <img width={133} height={112} src={src} alt="Nike Blazer Mid Suede"/>
             <h5>{ isLanguage ? (name.replace('Мужские кроссовки', "Men's sneakers")):(name)}</h5>
             <div className="card-price">
               <div className="price-block">
-                <span>{t('price')}</span>
-                <h3><b>{isLanguage ? (Math.round(price/38)) : (price)} {t('$')}</b></h3>
+                <span>{priceTitle}</span>
+                <h3><b>{isLanguage ? (Math.round(price/38)) : (price)} {priceFigure}</b></h3>
               </div>
               <div onClick={clickPlus} className='card-button'>
                 {addToCart && 
-                <img width={32} height={32} src={isItemAdded(parentId) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} alt="Добавить"/>
+                <img width={32} height={32} src={isItemAdded(parentId) ? "img/btn-checked.svg" : "img/btn-plus.svg"} alt="Добавить"/>
                 }
               </div>
             </div>
