@@ -1,4 +1,4 @@
-# React Sneakers - (URL)
+# React Sneakers - ([URL](https://leofom.github.io/))
 
 
 ## Задачи
